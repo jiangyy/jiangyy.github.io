@@ -18,7 +18,7 @@ var e=(e,t)=>()=>(t||(e((t={exports:{}}).exports,t),e=null),t.exports);(function
 
 **Associate Professor** · School of Computer Science and Technology · Nanjing University
 
-> [Bio](#bio) · [Papers](#papers) · [Wiki](https://jyywiki.cn/) · [Bilibili](https://space.bilibili.com/202224425) · [Rednote](https://www.xiaohongshu.com/user/profile/5c24f0850000000005012295)
+> [Bio](#bio) · [Papers](#papers) · [Wiki](https://jyywiki.cn/) · [Bilibili](https://space.bilibili.com/202224425) · [Zhihu](https://www.zhihu.com/people/jiang-yan-yan-75) · [Rednote](https://www.xiaohongshu.com/user/profile/5c24f0850000000005012295)
 > [Generative Software Engineering (Fall 2026)](https://jyywiki.cn/GSE/2026/)
 >
 > Room 0b1111111111, CST Building
