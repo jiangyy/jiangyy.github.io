@@ -22,7 +22,7 @@ export const manifest: Manifest = {
     {
       "slug": "index",
       "title": "Yanyan Jiang 蒋炎岩 jyy@nju.edu.cn",
-      "body": "# Yanyan Jiang 蒋炎岩 jyy@nju.edu.cn\n\n**Associate Professor** · School of Computer Science and Technology · Nanjing University\n\n> [Bio](#bio) · [Papers](#papers) · [Wiki](https://jyywiki.cn/) · [Bilibili](https://space.bilibili.com/202224425) · [Rednote](https://www.xiaohongshu.com/user/profile/5c24f0850000000005012295)\n> [Generative Software Engineering (Fall 2026)](https://jyywiki.cn/GSE/2026/)\n>\n> Room 0b1111111111, CST Building\n> Nanjing University Xianlin Campus\n\nI build agentic AI systems that power test-time scaling toward the broader horizon of general intelligence.\n\n(This page doubles as a shell.)",
+      "body": "# Yanyan Jiang 蒋炎岩 jyy@nju.edu.cn\n\n**Associate Professor** · School of Computer Science and Technology · Nanjing University\n\n> [Bio](#bio) · [Papers](#papers) · [Wiki](https://jyywiki.cn/) · [Bilibili](https://space.bilibili.com/202224425) · [Zhihu](https://www.zhihu.com/people/jiang-yan-yan-75) · [Rednote](https://www.xiaohongshu.com/user/profile/5c24f0850000000005012295)\n> [Generative Software Engineering (Fall 2026)](https://jyywiki.cn/GSE/2026/)\n>\n> Room 0b1111111111, CST Building\n> Nanjing University Xianlin Campus\n\nI build agentic AI systems that power test-time scaling toward the broader horizon of general intelligence.\n\n(This page doubles as a shell.)",
       "path": "index.md",
       "kind": "page",
       "apps": []
