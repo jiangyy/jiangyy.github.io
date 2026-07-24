@@ -32,6 +32,20 @@ export interface TuiSession {
   release(): void;
 }
 
+/** If `target` is an internal same-page link, return its command slug; else null. */
+function internalPage(target: string): string | null {
+  if (target.startsWith('#')) return target.slice(1) || null;
+  try {
+    const u = new URL(target, location.href);
+    if (u.origin === location.origin && u.pathname === location.pathname && u.hash) {
+      return u.hash.slice(1) || null;
+    }
+  } catch {
+    /* not a url */
+  }
+  return null;
+}
+
 export class Term {
   readonly xterm: Terminal;
   private fitAddon = new FitAddon();
@@ -40,8 +54,10 @@ export class Term {
   private tuiKeyCb?: (e: KeyEvent) => void;
   private tuiResizeCb?: (size: TermSize) => void;
   private cleanups: Array<() => void> = [];
+  private readonly onNavigate?: (cmd: string) => void;
 
-  constructor(host: HTMLElement) {
+  constructor(host: HTMLElement, onNavigate?: (cmd: string) => void) {
+    this.onNavigate = onNavigate;
     this.xterm = new Terminal({
       fontFamily:
         '"Fira Code", "JetBrains Mono", "SFMono-Regular", ui-monospace, Menlo, Consolas, ' +
@@ -55,23 +71,14 @@ export class Term {
       linkHandler: {
         allowNonHttpProtocols: true,
         activate: (_event, target) => {
-          // Internal same-page links (#hash, or same-origin/same-path with a
-          // hash) navigate in place via the hash router; everything else opens
-          // in a new tab.
-          if (target.startsWith('#')) {
-            location.hash = target;
+          // Internal same-page links go through onNavigate (pushState + run);
+          // everything else opens in a new tab.
+          const page = internalPage(target);
+          if (page !== null) {
+            this.onNavigate?.(page);
             return;
           }
-          try {
-            const u = new URL(target, location.href);
-            if (u.origin === location.origin && u.pathname === location.pathname && u.hash) {
-              location.hash = u.hash;
-              return;
-            }
-            window.open(target, '_blank', 'noopener');
-          } catch {
-            location.hash = '#' + target;
-          }
+          window.open(target, '_blank', 'noopener');
         },
       },
       theme: {

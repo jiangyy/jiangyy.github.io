@@ -6,7 +6,7 @@
 > [Generative Software Engineering (Fall 2026)](https://jyywiki.cn/GSE/2026/)
 >
 > Room 0b1111111111, CST Building
-> NJU Xianlin Campus
+> Nanjing University Xianlin Campus
 
 I build agentic AI systems that power test-time scaling toward the broader horizon of general intelligence.
 
