@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>~jyy</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #fafafa;
+      --fg: #2e3338;
+      --border: #d0d7de;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Fira Code", "JetBrains Mono", "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+    }
+
+    #app {
+      height: 100vh;
+      display: flex;
+      padding: 12px;
+    }
+
+    #term-host {
+      flex: 1;
+      min-height: 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--bg);
+      /* extra bottom padding absorbs sub-pixel row overflow so the last line
+         isn't clipped by overflow:hidden. */
+      padding: 6px 6px 16px 6px;
+      overflow: hidden;
+    }
+
+    #term-host .xterm { height: 100%; }
+
+    /* Visible scrollbars on the light theme (xterm's default thumb vanishes on white). */
+    .xterm-viewport {
+      scrollbar-width: thin;
+      scrollbar-color: #c0c7cf transparent;
+    }
+    .xterm-viewport::-webkit-scrollbar { width: 10px; }
+    .xterm-viewport::-webkit-scrollbar-track { background: transparent; }
+    .xterm-viewport::-webkit-scrollbar-thumb {
+      background: #c0c7cf;
+      border-radius: 5px;
+    }
+    .xterm-viewport::-webkit-scrollbar-thumb:hover { background: #a8afb7; }
+  </style>
+  <script type="module" crossorigin src="/assets/index-B58bJolp.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-kHJ-D0s7.css">
+</head>
+
+<body>
+  <div id="app">
+    <div id="term-host"></div>
+  </div>
+</body>
+
+</html>
