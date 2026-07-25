@@ -17,7 +17,7 @@ and tools live in `/bin`.
 - `cd <dir>`    change directory (`cd /bin`, `cd ..`, `cd /`)
 - `clear`       clear the screen
 - `wc`          count lines/words/bytes from stdin
-- `Ctrl-D`      on an empty line, return to the home page
+- `exit`        return to the home page (same as Ctrl-D on an empty line)
 
 ## tips
 

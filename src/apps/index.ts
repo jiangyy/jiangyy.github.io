@@ -11,9 +11,10 @@ import { cd } from './cd';
 import { pwd } from './pwd';
 import { wc } from './wc';
 import { clear } from './clear';
+import { exit } from './exit';
 import { whoami } from './whoami';
 
 /** Built-in /bin command set. Register more apps here — that's the only wiring. */
 export const builtinApps: Command[] = [
-  ls, cat, head, tail, grep, find, tree, more, less, cd, pwd, wc, clear, whoami,
+  ls, cat, head, tail, grep, find, tree, more, less, cd, pwd, wc, clear, exit, whoami,
 ];

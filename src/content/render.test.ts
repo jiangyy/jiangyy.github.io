@@ -28,10 +28,11 @@ test('list: bullet points', () => {
   assert.ok(out.includes('three'));
 });
 
-test('code block: fenced with language label', () => {
+test('code block: rendered as plain text, no header or left rule', () => {
   const out = renderMarkdown('```ts\nconst x = 1\n```');
   assert.match(out, /const x = 1/);
-  assert.match(out, /code · ts/);
+  assert.doesNotMatch(out, /code · ts/); // no header
+  assert.doesNotMatch(out, /│/); // no left rule
 });
 
 test('codespan: gray underline, same style as links', () => {

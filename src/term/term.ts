@@ -60,7 +60,7 @@ export class Term {
     this.onNavigate = onNavigate;
     this.xterm = new Terminal({
       fontFamily:
-        '"Fira Code", "JetBrains Mono", "SFMono-Regular", ui-monospace, Menlo, Consolas, ' +
+        '"Maple Mono", "Fira Code", "JetBrains Mono", "SFMono-Regular", ui-monospace, Menlo, Consolas, ' +
         '"PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", ' +
         '"Apple Color Emoji", "Segoe UI Emoji", monospace',
       fontSize: 16,

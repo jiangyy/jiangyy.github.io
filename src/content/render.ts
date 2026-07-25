@@ -108,12 +108,7 @@ function renderBlock(t: Token): string {
     case 'code': {
       const c = t as Tokens.Code;
       const body = c.text.replace(/\n$/, '');
-      const header = `${C.border}┌─ code${c.lang ? ` · ${c.lang}` : ''}${RESET}`;
-      const lines = body
-        .split('\n')
-        .map((l) => `${C.border}│${RESET} ${l}`)
-        .join('\n');
-      return `${header}\n${lines}\n\n`;
+      return `${body}\n\n`;
     }
     case 'blockquote': {
       const b = t as Tokens.Blockquote;

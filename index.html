@@ -14,6 +14,21 @@
       --border: #d0d7de;
     }
 
+    @font-face {
+      font-family: "Maple Mono";
+      src: url("/fonts/MapleMono.woff2") format("woff2");
+      font-weight: 300 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Maple Mono";
+      src: url("/fonts/MapleMono-Italic.woff2") format("woff2");
+      font-weight: 300 700;
+      font-style: italic;
+      font-display: swap;
+    }
+
     * { box-sizing: border-box; }
 
     html, body {
@@ -21,7 +36,7 @@
       height: 100%;
       background: var(--bg);
       color: var(--fg);
-      font-family: "Fira Code", "JetBrains Mono", "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+      font-family: "Maple Mono", "Fira Code", "JetBrains Mono", "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
     }
 
     #app {
