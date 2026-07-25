@@ -53,5 +53,5 @@ Every content document is also a command, so `about` and `cat about` are equival
 
 ## Try it
 
-`help`, `ls`, `about`, `cat projects`, `about | wc -l`, `image`, `tui` (q/ESC to
-quit). Or click the buttons on top — they just inject a command.
+`help`, `ls`, `about`, `cat projects`, `about | wc -l`, `tree`, `more help`. Or
+click the buttons on top — they just inject a command.

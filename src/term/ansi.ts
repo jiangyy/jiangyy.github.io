@@ -43,8 +43,34 @@ export function link(url: string, text: string): string {
   return `\x1b]8;;${url}\x1b\\${text}\x1b]8;;\x1b\\`;
 }
 
-/** Display width of one code point: 2 for CJK / wide emoji, else 1 cell. */
+/**
+ * Zero-width code point that extends a base rather than starting a new cell:
+ * ZWJ/ZWNJ, emoji & text variation selectors, skin-tone modifiers, and the
+ * common combining-mark ranges. These must not add to display width, and a ZWJ
+ * also folds the following base into the same cluster.
+ */
+export function isExtender(code: number): boolean {
+  return (
+    code === 0x200d || // zero-width joiner
+    code === 0x200c || // zero-width non-joiner
+    (code >= 0xfe00 && code <= 0xfe0f) || // variation selectors (1–16)
+    (code >= 0x1f3fb && code <= 0x1f3ff) || // emoji skin-tone modifiers
+    (code >= 0x0300 && code <= 0x036f) || // combining diacritics
+    (code >= 0x1ab0 && code <= 0x1aff) ||
+    (code >= 0x1dc0 && code <= 0x1dff) ||
+    (code >= 0x20d0 && code <= 0x20ff) ||
+    (code >= 0xfe20 && code <= 0xfe2f) // combining half marks
+  );
+}
+
+/** Regional indicator (flag half); a pair forms one 2-cell flag. */
+function isRegional(code: number): boolean {
+  return code >= 0x1f1e6 && code <= 0x1f1ff;
+}
+
+/** Display width of one code point: 0 for extenders, 2 for CJK / wide emoji, else 1. */
 export function charWidth(code: number): number {
+  if (isExtender(code)) return 0;
   if (code < 0x300) return 1;
   if (
     (code >= 0x1100 && code <= 0x115f) ||
@@ -63,11 +89,68 @@ export function charWidth(code: number): number {
   return 1;
 }
 
-/** Display width of a string in terminal cells (handles CJK / emoji / surrogates). */
+/**
+ * Display width of a string in terminal cells, accounting for grapheme clusters:
+ * ZWJ-joined emoji (👨‍👩‍👧), variation selectors, skin-tone modifiers, flags
+ * (🇨🇳), and combining diacritics (é) each count as a single cluster, not one
+ * cell per code point. (xterm still renders ZWJ families cell-by-cell — this
+ * only keeps our own cursor/rule math honest.)
+ */
 export function displayWidth(str: string): number {
+  const cps: number[] = [];
+  for (const ch of str) cps.push(ch.codePointAt(0) ?? 0);
   let w = 0;
-  for (const ch of str) w += charWidth(ch.codePointAt(0) ?? 0);
+  let joinNext = false;
+  for (let i = 0; i < cps.length; i++) {
+    const cp = cps[i];
+    if (cp === 0x200d) {
+      joinNext = true; // ZWJ folds the next base into this cluster (no extra width)
+      continue;
+    }
+    if (isExtender(cp)) continue;
+    if (joinNext) {
+      joinNext = false;
+      continue;
+    }
+    if (isRegional(cp) && i + 1 < cps.length && isRegional(cps[i + 1])) {
+      w += 2; // a flag is two indicators, one 2-cell cluster
+      i++;
+      continue;
+    }
+    w += charWidth(cp);
+  }
   return w;
+}
+
+/** UTF-16 index where the grapheme cluster ending just before `at` begins. */
+export function prevClusterStart(str: string, at: number): number {
+  if (at <= 0) return 0;
+  const cps = [...str.slice(0, at)];
+  const cp = (i: number) => cps[i].codePointAt(0) ?? 0;
+  let k = cps.length;
+  while (k > 0 && isExtender(cp(k - 1))) k--; // trailing extenders belong to the cluster
+  if (k === 0) return at;
+  k--; // the base
+  while (k >= 2 && cp(k - 1) === 0x200d) k -= 2; // fold ZWJ-joined bases
+  if (k >= 2 && isRegional(cp(k - 1)) && isRegional(cp(k - 2))) k--; // fold a flag pair
+  return cps.slice(0, k).reduce((n, s) => n + s.length, 0);
+}
+
+/** UTF-16 index just past the grapheme cluster beginning at `at`. */
+export function nextClusterEnd(str: string, at: number): number {
+  const cps = [...str.slice(at)];
+  if (cps.length === 0) return at;
+  const cp = (i: number) => cps[i].codePointAt(0) ?? 0;
+  let k = 1; // the base
+  const eat = () => {
+    while (k < cps.length && isExtender(cp(k)) && cp(k) !== 0x200d) k++;
+  };
+  eat();
+  while (k + 1 < cps.length && cp(k) === 0x200d) {
+    k += 2; // ZWJ + the base it joins
+    eat();
+  }
+  return at + cps.slice(0, k).reduce((n, s) => n + s.length, 0);
 }
 
 /** Strip ANSI SGR escape sequences, returning the visible text. */

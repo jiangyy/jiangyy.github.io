@@ -6,7 +6,7 @@ import type { ContentStore } from '../content/store';
 import type { Context, DirEntry, Registry, StdOut } from './types';
 import { parseLine } from './parser';
 import { resolvePath } from './path';
-import { displayWidth } from '../term/ansi';
+import { displayWidth, prevClusterStart, nextClusterEnd } from '../term/ansi';
 
 export interface ShellDeps {
   term: Term;
@@ -210,12 +210,9 @@ export class Shell {
       case '\x7f':
       case '\b': {
         if (this.cursor > 0) {
-          let cut = this.cursor - 1;
-          const unit = this.buffer.charCodeAt(cut);
-          if (unit >= 0xdc00 && unit <= 0xdfff && cut > 0) {
-            const prev = this.buffer.charCodeAt(cut - 1);
-            if (prev >= 0xd800 && prev <= 0xdbff) cut -= 1;
-          }
+          // Delete the whole grapheme cluster to the left (so a ZWJ emoji like
+          // 👨‍👩‍👧 vanishes in one keystroke, not codepoint-by-codepoint).
+          const cut = prevClusterStart(this.buffer, this.cursor);
           this.buffer = this.buffer.slice(0, cut) + this.buffer.slice(this.cursor);
           this.cursor = cut;
           this.redraw();
@@ -274,8 +271,21 @@ export class Shell {
         break;
       }
       case '\x04': // Ctrl-D
+        // At an empty prompt, Ctrl-D is "logout": reset to the initial state
+        // (clear cwd and re-run the homepage, e.g. `index`). With text present it
+        // deletes the grapheme cluster to the right, like a normal shell.
+        if (this.buffer.length === 0) {
+          this.cwd = '';
+          const cmd = this.initialCommand ?? 'index';
+          const r = this.resolveLine;
+          this.resolveLine = undefined;
+          r?.(cmd);
+          return;
+        }
         if (this.cursor < this.buffer.length) {
-          this.buffer = this.buffer.slice(0, this.cursor) + this.buffer.slice(this.cursor + 1);
+          // Delete the whole grapheme cluster to the right (don't split an emoji).
+          const end = nextClusterEnd(this.buffer, this.cursor);
+          this.buffer = this.buffer.slice(0, this.cursor) + this.buffer.slice(end);
           this.redraw();
         }
         break;

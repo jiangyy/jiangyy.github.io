@@ -1,4 +1,7 @@
 import type { Command } from '../shell/types';
+import { BOLD, RESET, fg256 } from '../term/ansi';
+
+const DIR = `${BOLD}${fg256(62)}`; // muted indigo — same as `tree`
 
 export const ls: Command = {
   name: 'ls',
@@ -15,7 +18,8 @@ export const ls: Command = {
       return;
     }
     for (const e of entries) {
-      ctx.stdout.print(`  ${e.name}${e.dir ? '/' : ''}`);
+      const name = e.dir ? `${DIR}${e.name}/${RESET}` : e.name;
+      ctx.stdout.print(`  ${name}`);
     }
   },
 };

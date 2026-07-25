@@ -7,10 +7,17 @@ and tools live in `/bin`.
 
 - `ls [dir]`    list a directory (try `ls /bin`)
 - `cat <path>`  print a document (no clear; pipe-friendly)
+- `head [path]` first lines (`head -n 5 home`, `cat home | head`)
+- `tail [path]` last lines (`tail -n 3 home`)
+- `grep <pat>`  filter lines (`cat home | grep foo`)
+- `find [path]` walk the FS (`find /bin -type f`, `find -name papers`)
+- `tree [path]` draw the FS as a tree
+- `more [path]` page a document or stdin (space/b/q)
+- `less [path]` same pager, with PageUp/PageDown
 - `cd <dir>`    change directory (`cd /bin`, `cd ..`, `cd /`)
 - `clear`       clear the screen
 - `wc`          count lines/words/bytes from stdin
-- `tui`         a fullscreen TUI demo (q/ESC to quit)
+- `Ctrl-D`      on an empty line, return to the home page
 
 ## tips
 

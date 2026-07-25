@@ -1,13 +1,105 @@
 # Papers
 
-## Anno ChaGPT 5 (2026)
-
-## Anno ChaGPT 4 (2025)
-
-## Anno ChaGPT 3 (2024)
-
-## Anno ChaGPT 2 (2023)
-
-## Anno ChaGPT 1 (2022)
-
 ## Pre-LLM Era
+
+### 2013
+
+- DPAC: Dynamic program analysis of concurrent Java programs — *Middleware Doctoral'13*. [doi](https://doi.org/10.1145/2541534.2541591)
+
+### 2014
+
+- CARE: Cache guided deterministic replay for concurrent Java programs — *ICSE'14*. [doi](https://doi.org/10.1145/2568225.2568236)
+- User guided automation for testing mobile apps — *APSEC'14*. [doi](https://doi.org/10.1109/APSEC.2014.13)
+- GAIN: GPU-based constraint checking for context consistency — *APSEC'14*. [doi](https://doi.org/10.1109/APSEC.2014.55)
+
+### 2015
+
+- Optimistic shared memory dependence tracing — *ASE'15*. [doi](https://doi.org/10.1109/ASE.2015.11) · [code](http://github.com/jiangyy/rwtrace)
+- ABC: Accelerated building of C/C++ projects — *APSEC'15*. [doi](https://doi.org/10.1109/APSEC.2015.27)
+- Concolic metamorphic debugging — *COMPSAC'15*. [doi](https://doi.org/10.1109/COMPSAC.2015.79)
+- CoseDroid: Effective computation- and sensing-offloading for Android apps — *COMPSAC'15*. [doi](https://doi.org/10.1109/COMPSAC.2015.120)
+- Facilitating reusable automated testing for Android apps — *Internetware'15*. [doi](https://doi.org/10.1145/2875913.2875937)
+
+### 2016
+
+- Crash consistency validation made easy — *FSE'16*. [doi](https://doi.org/10.1145/2950290.2950327) · [code](http://jiangyy.github.io/c3/)
+- Online shared memory dependence reduction via bisectional coordination — *FSE'16*. [doi](https://doi.org/10.1145/2950290.2950326)
+- Effectively manifesting concurrency bugs in Android apps — *APSEC'16*. [doi](https://doi.org/10.1109/APSEC.2016.038)
+- Testing Android apps via guided gesture event generation — *APSEC'16*. [doi](https://doi.org/10.1109/APSEC.2016.037)
+- Hybrid CPU-GPU constraint checking: Towards efficient context consistency — *IST*. [doi](https://doi.org/10.1016/j.infsof.2015.10.003)
+
+### 2017
+
+- Understanding Shared Memory Dependences — PhD Thesis, NJU (CCF Doctoral Dissertation Award 🏆).
+- Approaches to obtaining shared memory dependences: A survey — *JoS (CN)*. [doi](https://doi.org/10.13328/j.cnki.jos.005193)
+- RepDroid: Automated Android repackaging detection — *ICPC'17*. [doi](https://doi.org/10.1109/ICPC.2017.16)
+
+### 2018
+
+- ReScue: Crafting regular expression DoS attacks — *ASE'18* (SIGSOFT Distinguished 🏆). [doi](https://doi.org/10.1145/3238147.3238159) · [code](http://2bdenny.github.io/ReScue/)
+- Testing multithreaded programs via thread speed control — *ESEC/FSE'18*. [doi](https://doi.org/10.1145/3236024.3236077) · [code](https://midwinter1993.github.io/Schnauzer/)
+- AATT+: Manifesting concurrency bugs in Android apps — *SCP*. [doi](https://doi.org/10.1016/j.scico.2018.03.008) · [code](https://github.com/skull591/AATT)
+- Automating object transformations for dynamic software updating — *ECOOP'18*. [doi](https://doi.org/10.4230/LIPIcs.ECOOP.2018.19)
+- Needle: Detecting code plagiarism on student submissions — *TURC/SIGCSE China'18*. [doi](https://doi.org/10.1145/3210713.3210724)
+- LESdroid: Detecting exported service leaks of Android apps — *ICPC'18*. [doi](https://doi.org/10.1145/3196321.3196336)
+
+### 2019
+
+- Automatic self-validation for code coverage profilers — *ASE'19*. [doi](https://doi.org/10.1109/ASE.2019.00018)
+- Understanding exception-related bugs in large-scale cloud systems — *ASE'19*. [doi](https://doi.org/10.1109/ASE.2019.00040)
+- Characterizing inefficient image displaying issues in Android apps — *SANER'19*. [doi](https://doi.org/10.1109/SANER.2019.8668030)
+- Automatic test input generation for Android apps — *Sci. Sin. (CN)*. [doi](https://doi.org/10.1360/N112019-00003)
+- Highs and lows in my PhD journey — *CCF Commun. (CN)* (Invited for CCF Doctoral Dissertation 🏆). [link](https://dl.ccf.org.cn/institude/institudeDetail?id=4537525828306944)
+
+### 2020
+
+- Testing file system implementations on layered models — *ICSE'20*. [doi](https://doi.org/10.1145/3377811.3380350) · [code](https://midwinter1993.github.io/dogfood/)
+- ComboDroid: High-quality test inputs via use case combinations — *ICSE'20*. [doi](https://doi.org/10.1145/3377811.3380382) · [code](https://github.com/skull591/ComboDroid-Artifact)
+- WARDER: Spreadsheet defect detection via validity-based clustering — *JSS*. [doi](https://doi.org/10.1016/j.jss.2020.110615)
+- Perspectives on search strategies in automated test input generation — *FCS*. [doi](https://doi.org/10.1007/s11704-019-8281-3)
+
+### 2021
+
+- Synthesizing object state transformers for dynamic software updates — *ICSE'21* (SIGSOFT Distinguished & European Best 🏆). [doi](https://doi.org/10.1109/ICSE43902.2021.00103) · [pdf](https://zelinzhao.github.io/pasta/artifact/pasta-icse2021.pdf) · [code](https://zelinzhao.github.io/pasta/)
+- Timely and accurate detection of model deviation — *ESEC/FSE'21*. [doi](https://doi.org/10.1145/3468264.3468548) · [code](https://github.com/tongyanxiang/MoD2)
+- On interleaving space exploration of multi-threaded programs — *FCS*. [doi](https://doi.org/10.1007/s11704-020-9501-6)
+- Automatic performance testing for image displaying in Android apps — *APSEC'21*. [doi](https://doi.org/10.1109/APSEC53868.2021.00039)
+- Transferable multilevel attention neural network for accurate prediction of quantum chemistry properties — *JCIM*. [doi](https://doi.org/10.1021/acs.jcim.0c01224)
+
+## Anno ChatGPT 1 (2022)
+
+- Push-button synthesis of watch companions for Android apps — *ICSE'22*. [doi](https://doi.org/10.1145/3510003.3510056) · [code](https://search.datacite.org/works/10.5281/zenodo.5850491)
+- Cross-device record and replay for Android apps — *ESEC/FSE'22*. [doi](https://doi.org/10.1145/3540250.3549083)
+- Detecting non-crashing functional bugs via deep-state differential analysis — *ESEC/FSE'22*. [doi](https://doi.org/10.1145/3540250.3549170)
+- GUI event-based record and replay for Android apps: A survey — *JoS (CN)*. [doi](https://doi.org/10.13328/j.cnki.jos.006551)
+
+## Anno ChatGPT 2 (2023)
+
+- The hitchhiker's guide to operating systems — *USENIX ATC'23*. [link](https://www.usenix.org/conference/atc23/presentation/jiang-yanyan) · [code](https://github.com/jiangyy/mosaic)
+- Validating JIT compilers via compilation space exploration — *SOSP'23* (Best Paper 🏆). [doi](https://doi.org/10.1145/3600006.3613140)
+
+## Anno ChatGPT 3 (2024)
+
+- The Mutators Reloaded: Fuzzing compilers with LLM-generated mutation operators — *ASPLOS'24*. [doi](https://doi.org/10.1145/3622781.3674171) · [code](https://icsnju.github.io/MetaMut/)
+- Towards life-long software self-validation in production — *Internetware'24*. [doi](https://doi.org/10.1145/3671016.3671382)
+- Understanding and detecting inefficient image displaying in Android apps — *JCST*. [doi](https://doi.org/10.1007/s11390-022-1670-3)
+- Programming by example made easy — *TOSEM*. [doi](https://doi.org/10.1145/3607185)
+
+## Anno ChatGPT 4 (2025)
+
+- Understanding the Linux kernel, visually — *EuroSys'25* (Best Student Paper 🏆). [doi](https://doi.org/10.1145/3689031.3696095)
+- Unveiling cross-checking opportunities in Verilog compilers — *TODAES*. [doi](https://doi.org/10.1145/3715325) · [code](https://github.com/icsnju/VeriXmith)
+- Validating JIT compilers via compilation space exploration — *TOCS* (extension of SOSP'23). [doi](https://doi.org/10.1145/3715102)
+- Question selection for multi-modal code search synthesis — *TSE*. [doi](https://doi.org/10.1109/TSE.2025.3565387)
+- Validity-preserving delta debugging via generator trace reduction — *TOSEM*. [doi](https://doi.org/10.1145/3705305)
+- NexusSym: Marrying symbolic path finders with large language models — *ASEJ*. [doi](https://doi.org/10.1007/s10515-025-00529-1)
+- Semantic aware greybox compiler fuzzing — *JoS (CN)*. [link](https://jos.org.cn/jos/article/abstract/7333)
+- System support for ubiquitous human-cyber-physical-fusion apps — *SCIS (CN)*. [doi](https://doi.org/10.1360/SSI-2024-0338)
+- Deep learning-based software engineering: Progress, challenges, and opportunities — *SCIS* (corresponding author for §10 bug finding). [doi](https://doi.org/10.1007/s11432-023-4127-5)
+- Evolving Beyond Pressure: RL-Enhanced Camera Launch for Resource-Critical Scenarios — *PACMI @ SOSP'25*. [doi](https://doi.org/10.1145/3766882.3767170)
+- Data Knows What the App Needs: An Intelligent Resource Watermark for Mobile Systems — *PACMI @ SOSP'25*. [doi](https://doi.org/10.1145/3766882.3767185)
+
+## Anno ChatGPT 5 (2026)
+
+- Streamlining Repository Tasks with Effective Snippet Retrieval — *TOSEM*. [doi](https://doi.org/10.1145/3821433) · [code](https://github.com/SoftWiser-group/RepoET)
+- Visualinux: Visual Debugging for the Linux Kernel — *TOCS* (extension of EuroSys'25). [doi](https://doi.org/10.1145/3820892)
