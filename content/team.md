@@ -8,7 +8,7 @@
 - Peili Gao 高培立 (2023)
 - Chaoyi Zhao 赵超懿 (2023)
 - Senqi Tan 谭森琪 (2024)
-- Yixuan Cao 曹逸轩 (2026)
+- [Yixuan Cao 曹弈轩](https://cao-wuhui.github.io/) (2026)
 
 ## Master
 
