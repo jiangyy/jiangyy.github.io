@@ -30,7 +30,7 @@
 
 ### 2017
 
-- Understanding Shared Memory Dependences — PhD Thesis, NJU (CCF Doctoral Dissertation Award 🏆).
+- Understanding shared memory dependences — PhD Thesis, NJU (CCF Doctoral Dissertation Award 🏆).
 - Approaches to obtaining shared memory dependences: A survey — *JoS (CN)*. [doi](https://doi.org/10.13328/j.cnki.jos.005193)
 - RepDroid: Automated Android repackaging detection — *ICPC'17*. [doi](https://doi.org/10.1109/ICPC.2017.16)
 
@@ -95,11 +95,11 @@
 - NexusSym: Marrying symbolic path finders with large language models — *ASEJ*. [doi](https://doi.org/10.1007/s10515-025-00529-1)
 - Semantic aware greybox compiler fuzzing — *JoS (CN)*. [link](https://jos.org.cn/jos/article/abstract/7333)
 - System support for ubiquitous human-cyber-physical-fusion apps — *SCIS (CN)*. [doi](https://doi.org/10.1360/SSI-2024-0338)
-- Deep learning-based software engineering: Progress, challenges, and opportunities — *SCIS* (corresponding author for §10 bug finding). [doi](https://doi.org/10.1007/s11432-023-4127-5)
-- Evolving Beyond Pressure: RL-Enhanced Camera Launch for Resource-Critical Scenarios — *PACMI @ SOSP'25*. [doi](https://doi.org/10.1145/3766882.3767170)
-- Data Knows What the App Needs: An Intelligent Resource Watermark for Mobile Systems — *PACMI @ SOSP'25*. [doi](https://doi.org/10.1145/3766882.3767185)
+- Deep learning-based software engineering: Progress, challenges, and opportunities — *SCIS* (authored §10 bug finding). [doi](https://doi.org/10.1007/s11432-023-4127-5)
+- Evolving beyond pressure: RL-enhanced camera launch for resource-critical scenarios — *PACMI @ SOSP'25*. [doi](https://doi.org/10.1145/3766882.3767170)
+- Data knows what the app needs: An intelligent resource watermark for mobile systems — *PACMI @ SOSP'25*. [doi](https://doi.org/10.1145/3766882.3767185)
 
 ## Anno ChatGPT 5 (2026)
 
-- Streamlining Repository Tasks with Effective Snippet Retrieval — *TOSEM*. [doi](https://doi.org/10.1145/3821433) · [code](https://github.com/SoftWiser-group/RepoET)
-- Visualinux: Visual Debugging for the Linux Kernel — *TOCS* (extension of EuroSys'25). [doi](https://doi.org/10.1145/3820892)
+- Streamlining repository tasks with effective snippet retrieval — *TOSEM*. [doi](https://doi.org/10.1145/3821433) · [code](https://github.com/SoftWiser-group/RepoET)
+- Visualinux: Visual debugging for the Linux kernel — *TOCS* (extension of EuroSys'25). [doi](https://doi.org/10.1145/3820892)

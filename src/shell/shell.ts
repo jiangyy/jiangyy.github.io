@@ -150,6 +150,7 @@ export class Shell {
     this.history.push(trimmed);
 
     const segments = splitPipe(trimmed);
+    document.title = `~jyy: ${trimmed}`;
     let stdin = '';
     for (let i = 0; i < segments.length; i++) {
       const argv = parseLine(segments[i]);
