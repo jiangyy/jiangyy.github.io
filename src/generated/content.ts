@@ -46,7 +46,7 @@ export const manifest: Manifest = {
     {
       "slug": "team",
       "title": "Team",
-      "body": "# Team\n\n## PhD\n\n- [Hanzhi Liu 刘瀚之](https://jm233333.github.io/) (2020)\n- Yike Zhou 周意可 (2021)\n- Jiayi Wang 王加益 (2021)\n- Peili Gao 高培立 (2023)\n- Chaoyi Zhao 赵超懿 (2023)\n- Senqi Tan 谭森琪 (2024)\n- Yixuan Cao 曹逸轩 (2026)\n\n## Master\n\n- Yunfan Cao 曹云帆 (2024)\n- Zijian Zang 臧子健 (2024)\n- Jiayun Chen 陈嘉昀 (2025)\n- Xiaoci Lin 林小词 (2026)\n- Xuntao Chi 池训涛 (2026)\n\n> Looking for students excited to try crazy ideas and get their hands dirty; 👥 [Alumni](#alumni)",
+      "body": "# Team\n\n## PhD\n\n- [Hanzhi Liu 刘瀚之](https://jm233333.github.io/) (2020)\n- Yike Zhou 周意可 (2021)\n- Jiayi Wang 王加益 (2021)\n- Peili Gao 高培立 (2023)\n- Chaoyi Zhao 赵超懿 (2023)\n- Senqi Tan 谭森琪 (2024)\n- [Yixuan Cao 曹弈轩](https://cao-wuhui.github.io/) (2026)\n\n## Master\n\n- Yunfan Cao 曹云帆 (2024)\n- Zijian Zang 臧子健 (2024)\n- Jiayun Chen 陈嘉昀 (2025)\n- Xiaoci Lin 林小词 (2026)\n- Xuntao Chi 池训涛 (2026)\n\n> Looking for students excited to try crazy ideas and get their hands dirty; 👥 [Alumni](#alumni)",
       "path": "team.md",
       "kind": "page",
       "apps": []
