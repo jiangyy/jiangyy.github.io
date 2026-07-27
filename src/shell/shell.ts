@@ -272,15 +272,14 @@ export class Shell {
         break;
       }
       case '\x04': // Ctrl-D
-        // At an empty prompt, Ctrl-D is "logout": reset to the initial state
-        // (clear cwd and re-run the homepage, e.g. `index`). With text present it
-        // deletes the grapheme cluster to the right, like a normal shell.
+        // At an empty prompt, Ctrl-D is "logout": reset cwd and re-run `index`
+        // (the homepage) — always, regardless of which page first loaded. With
+        // text present it deletes the grapheme cluster to the right, like a shell.
         if (this.buffer.length === 0) {
           this.cwd = '';
-          const cmd = this.initialCommand ?? 'index';
           const r = this.resolveLine;
           this.resolveLine = undefined;
-          r?.(cmd);
+          r?.('index');
           return;
         }
         if (this.cursor < this.buffer.length) {
