@@ -49,7 +49,7 @@ function collect(ctx: Parameters<Command['run']>[0], files: string[]) {
       ctx.stdout.print(`tail: ${f}: no such file`);
       continue;
     }
-    out.push({ name: f, text: renderMarkdown(doc.body) });
+    out.push({ name: f, text: renderMarkdown(doc.body, ctx.term.cols) });
   }
   return out;
 }

@@ -20,7 +20,7 @@ export const cat: Command = {
         ctx.stdout.print(`cat: ${path}: no such file`);
         continue;
       }
-      ctx.stdout.write(renderMarkdown(doc.body));
+      ctx.stdout.write(renderMarkdown(doc.body, ctx.term.cols));
     }
   },
 };

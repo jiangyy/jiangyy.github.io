@@ -18,4 +18,5 @@
 - Xiaoci Lin 林小词 (2026)
 - Xuntao Chi 池训涛 (2026)
 
-> Looking for students excited to try crazy ideas and get their hands dirty; 👥 [Alumni](#alumni)
+> Looking for students excited to try crazy ideas and get hands dirty.
+> 👥 [Alumni](#alumni)

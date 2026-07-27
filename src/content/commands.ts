@@ -9,7 +9,7 @@ import { renderMarkdown } from './render';
 /** "Execute" a document: clear the screen (when interactive) then print it. */
 export async function renderDoc(ctx: Context, doc: Document): Promise<void> {
   if (ctx.tty) ctx.term.write('\x1b[2J\x1b[3J\x1b[H');
-  ctx.stdout.write(renderMarkdown(doc.body));
+  ctx.stdout.write(renderMarkdown(doc.body, ctx.term.cols));
 }
 
 export function docCommand(doc: Document): Command {

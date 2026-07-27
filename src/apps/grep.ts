@@ -24,7 +24,7 @@ export const grep: Command = {
         : files.map((f) => {
             const doc = ctx.store.get(resolvePath(f, ctx.cwd));
             return doc
-              ? { name: f, text: renderMarkdown(doc.body) }
+              ? { name: f, text: renderMarkdown(doc.body, ctx.term.cols) }
               : { name: f, text: null as string | null };
           });
 

@@ -13,6 +13,7 @@ import {
   link as oscLink,
   stripAnsi,
 } from '../term/ansi';
+import { wrapWords } from '../term/wrap';
 
 // Modern muted palette (256-color), light-background friendly.
 const C = {
@@ -23,9 +24,14 @@ const C = {
   hr: fg256(252),
 };
 
-export function renderMarkdown(body: string): string {
+/**
+ * Render markdown to ANSI text. Pass `width` (terminal columns) to word-wrap
+ * paragraphs, list items, and blockquotes at word boundaries with hanging
+ * indents; omit it for unwrapped output (tests, widthless callers).
+ */
+export function renderMarkdown(body: string, width = 0): string {
   const tokens = marked.lexer(body);
-  const out = tokens.map(renderBlock).join('');
+  const out = tokens.map((t) => renderBlock(t, width)).join('');
   // strip trailing whitespace, then force exactly one blank line at the end so
   // every page/print ends consistently before the next prompt.
   return out.replace(/\n{3,}/g, '\n\n').trimEnd() + '\n\n';
@@ -79,7 +85,7 @@ function renderInlineToken(t: Token): string {
   }
 }
 
-function renderBlock(t: Token): string {
+function renderBlock(t: Token, width: number): string {
   switch (t.type) {
     case 'heading': {
       const h = t as Tokens.Heading;
@@ -95,13 +101,27 @@ function renderBlock(t: Token): string {
     }
     case 'paragraph': {
       const p = t as Tokens.Paragraph;
-      return `${renderInline(p.tokens)}\n\n`;
+      const inline = renderInline(p.tokens);
+      const body = width ? wrapWords(inline, width).join('\n') : inline;
+      return `${body}\n\n`;
     }
     case 'list': {
       const l = t as Tokens.List;
-      const lines = l.items.map((item, i) => {
+      const lines: string[] = [];
+      l.items.forEach((item, i) => {
         const bullet = l.ordered ? `${i + 1}. ` : `${C.bullet}•${RESET} `;
-        return `  ${bullet}${renderInline((item as Tokens.ListItem).tokens).trim()}`;
+        const inner = renderInline((item as Tokens.ListItem).tokens).trim();
+        if (!width) {
+          lines.push(`  ${bullet}${inner}`);
+          return;
+        }
+        // Hanging indent: wrapped continuation lines align under the text after
+        // the "  • " marker (2-space indent + visible bullet width).
+        const bulletW = 2 + displayWidth(stripAnsi(bullet));
+        const wrapped = wrapWords(inner, Math.max(1, width - bulletW));
+        const pad = ' '.repeat(bulletW);
+        lines.push(`  ${bullet}${wrapped[0]}`);
+        for (let k = 1; k < wrapped.length; k++) lines.push(pad + wrapped[k]);
       });
       return lines.join('\n') + '\n\n';
     }
@@ -112,7 +132,8 @@ function renderBlock(t: Token): string {
     }
     case 'blockquote': {
       const b = t as Tokens.Blockquote;
-      const inner = (b.tokens ?? []).map(renderBlock).join('').trimEnd();
+      const innerWidth = width ? Math.max(1, width - 2) : 0; // leave room for "│ "
+      const inner = (b.tokens ?? []).map((tk) => renderBlock(tk, innerWidth)).join('').trimEnd();
       return (
         inner
           .split('\n')

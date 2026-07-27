@@ -47,6 +47,8 @@ function internalPage(target: string): string | null {
 }
 
 export class Term {
+  /** Maximum terminal width, in columns. The host is capped and centered at this. */
+  private static readonly MAX_COLS = 80;
   readonly xterm: Terminal;
   private fitAddon = new FitAddon();
   private mode: 'shell' | 'tui' = 'shell';
@@ -54,9 +56,11 @@ export class Term {
   private tuiKeyCb?: (e: KeyEvent) => void;
   private tuiResizeCb?: (size: TermSize) => void;
   private cleanups: Array<() => void> = [];
+  private readonly host: HTMLElement;
   private readonly onNavigate?: (cmd: string) => void;
 
   constructor(host: HTMLElement, onNavigate?: (cmd: string) => void) {
+    this.host = host;
     this.onNavigate = onNavigate;
     this.xterm = new Terminal({
       fontFamily:
@@ -106,7 +110,7 @@ export class Term {
       console.warn('unicode11 addon unavailable', e);
     }
 
-    this.fitAddon.fit();
+    this.fit();
     const ro = new ResizeObserver(() => this.fit());
     ro.observe(host);
     this.cleanups.push(() => ro.disconnect());
@@ -145,6 +149,27 @@ export class Term {
   }
   fit() {
     this.fitAddon.fit();
+    this.applyMaxWidth();
+  }
+
+  /** Cap the host at MAX_COLS columns; CSS (justify-content: center) centers it.
+   *  Self-consistent: cell width is derived from the current fit, so the cap reproduces
+   *  MAX_COLS exactly. Setting (not clearing) the value every time avoids oscillation. */
+  private applyMaxWidth() {
+    const host = this.host;
+    const cols = this.xterm.cols;
+    if (cols <= 0) return;
+    const cs = getComputedStyle(host);
+    const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+    const borderX = parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
+    const contentW = host.clientWidth - padX; // clientWidth includes padding, excludes border
+    if (contentW <= 0) return;
+    const cellW = contentW / cols;
+    const value = Math.ceil(Term.MAX_COLS * cellW + padX + borderX) + 'px';
+    if (host.style.maxWidth !== value) {
+      host.style.maxWidth = value;
+      this.fitAddon.fit(); // refit within the capped width → MAX_COLS
+    }
   }
   focus() {
     this.xterm.focus();

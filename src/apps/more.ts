@@ -6,8 +6,8 @@
 import type { Command } from '../shell/types';
 import { resolvePath } from '../shell/path';
 import { renderMarkdown } from '../content/render';
-import { charWidth, RESET, DIM } from '../term/ansi';
-import { move } from '../term/ansi';
+import { RESET, DIM, move } from '../term/ansi';
+import { wrapLine } from '../term/wrap';
 
 const ERASE_BELOW = '\x1b[0J';
 
@@ -23,7 +23,7 @@ export const more: Command = {
         ctx.stdout.print(`more: ${file}: no such file`);
         return;
       }
-      text = renderMarkdown(doc.body);
+      text = renderMarkdown(doc.body, ctx.term.cols);
     } else if (ctx.stdin) {
       text = ctx.stdin;
     }
@@ -133,90 +133,4 @@ async function page(ctx: Parameters<Command['run']>[0], text: string): Promise<v
   // so the returning shell prompt lands cleanly on the next line.
   s.write(move(0, drawnRows) + ERASE_BELOW);
   s.release();
-}
-
-/** Wrap one logical line to `cols` display cells, carrying ANSI SGR across breaks. */
-export function wrapLine(line: string, cols: number): string[] {
-  const toks = tokenize(line);
-  const out: string[] = [];
-  let cur = '';
-  let w = 0;
-  let open = ''; // active SGR to re-emit after a wrap
-  const breakLine = () => {
-    out.push(cur + (open ? RESET : ''));
-    cur = open;
-    w = 0;
-  };
-  for (const t of toks) {
-    if (t.kind !== 'ch') {
-      cur += t.seq;
-      if (t.kind === 'sgr') {
-        if (t.seq === '\x1b[0m' || t.seq === '\x1b[m') open = '';
-        else open += t.seq;
-      }
-      continue;
-    }
-    if (w > 0 && w + t.w > cols) breakLine();
-    cur += t.s;
-    w += t.w;
-  }
-  out.push(cur + (open ? RESET : ''));
-  return out;
-}
-
-type Tok =
-  | { kind: 'sgr'; seq: string }
-  | { kind: 'osc'; seq: string }
-  | { kind: 'ch'; s: string; w: number };
-
-/** Split a styled line into SGR / OSC / grapheme tokens so wrapping never cuts a
- *  control sequence in half. */
-function tokenize(line: string): Tok[] {
-  const toks: Tok[] = [];
-  let i = 0;
-  while (i < line.length) {
-    const c = line.charCodeAt(i);
-    if (c === 0x1b) {
-      const next = line.charCodeAt(i + 1);
-      if (next === 0x5b) {
-        // CSI: ESC [ params final
-        let j = i + 2;
-        while (j < line.length && /[0-9;]/.test(line[j])) j++;
-        toks.push({ kind: 'sgr', seq: line.slice(i, j + 1) });
-        i = j + 1;
-        continue;
-      }
-      if (next === 0x5d) {
-        // OSC: ESC ] ... BEL | ST(ESC \)
-        let j = i + 2;
-        while (
-          j < line.length &&
-          line.charCodeAt(j) !== 0x07 &&
-          !(line.charCodeAt(j) === 0x1b && line.charCodeAt(j + 1) === 0x5c)
-        )
-          j++;
-        if (line.charCodeAt(j) === 0x07) {
-          toks.push({ kind: 'osc', seq: line.slice(i, j + 1) });
-          i = j + 1;
-        } else {
-          toks.push({ kind: 'osc', seq: line.slice(i, j + 2) });
-          i = j + 2;
-        }
-        continue;
-      }
-      toks.push({ kind: 'osc', seq: line.slice(i, i + 2) });
-      i += 2;
-      continue;
-    }
-    // grapheme (handle surrogate pairs → one supplementary codepoint)
-    if (c >= 0xd800 && c <= 0xdbff) {
-      const s = line.slice(i, i + 2);
-      toks.push({ kind: 'ch', s, w: charWidth(line.codePointAt(i) ?? 0) });
-      i += 2;
-      continue;
-    }
-    toks.push({ kind: 'ch', s: line[i], w: charWidth(c) });
-    i += 1;
-  }
-  return toks;
 }
