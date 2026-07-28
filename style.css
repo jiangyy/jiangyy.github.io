@@ -1,0 +1,76 @@
+:root {
+  color-scheme: light;
+  --bg: #fafafa;
+  --fg: #2e3338;
+  --border: #d0d7de;
+}
+
+@font-face {
+  font-family: "Maple Mono";
+  src: url("/fonts/MapleMono.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Maple Mono";
+  src: url("/fonts/MapleMono-Italic.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Maple Mono", "Fira Code", "JetBrains Mono", "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+}
+
+#app {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+}
+
+#term-host {
+  flex: 1;
+  min-height: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg);
+  /* extra bottom padding absorbs sub-pixel row overflow so the last line
+     isn't clipped by overflow:hidden. */
+  padding: 6px 6px 16px 6px;
+  overflow: hidden;
+  /* Cap at ~80 columns. The host shares xterm's monospace font/size, so 1ch
+     == one terminal cell; the +14px covers horizontal padding (12) + border
+     (2). Done in CSS (not JS) so it can't feed back into the ResizeObserver
+     and oscillate. */
+  max-width: calc(80ch + 14px);
+  /* Hidden until the terminal has been fit at final (post-font-load)
+     metrics, then faded in — masks the pre-JS full-width frame and the
+     web-font swap reflow that would otherwise flash on load. */
+  opacity: 0;
+  transition: opacity 150ms ease-out;
+}
+#term-host.ready { opacity: 1; }
+
+#term-host .xterm { height: 100%; }
+
+/* Visible scrollbars on the light theme (xterm's default thumb vanishes on white). */
+.xterm-viewport {
+  scrollbar-width: thin;
+  scrollbar-color: #c0c7cf transparent;
+}
+.xterm-viewport::-webkit-scrollbar { width: 10px; }
+.xterm-viewport::-webkit-scrollbar-track { background: transparent; }
+.xterm-viewport::-webkit-scrollbar-thumb {
+  background: #c0c7cf;
+  border-radius: 5px;
+}
+.xterm-viewport::-webkit-scrollbar-thumb:hover { background: #a8afb7; }
