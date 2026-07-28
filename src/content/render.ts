@@ -18,7 +18,6 @@ import { wrapWords } from '../term/wrap';
 // Modern muted palette (256-color), light-background friendly.
 const C = {
   heading: fg256(62), // muted indigo
-  link: fg256(33), // bright blue
   bullet: fg256(242), // muted gray
   border: fg256(244), // soft gray for code/quote rules
   hr: fg256(252),
@@ -67,7 +66,9 @@ function renderInlineToken(t: Token): string {
       if (href.startsWith('#') && typeof location !== 'undefined') {
         href = location.origin + location.pathname + href;
       }
-      return `${C.link}${oscLink(href, renderInline(lk.tokens) || lk.href)}${RESET}`;
+      // Links render in the default text color (no blue) but stay clickable via
+      // OSC 8 — xterm underlines them on hover.
+      return oscLink(href, renderInline(lk.tokens) || lk.href);
     }
     case 'image': {
       const im = t as Tokens.Image;

@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { renderMarkdown } from './render';
+import { stripAnsi } from '../term/ansi';
 
 test('heading h1: bold + indigo + a rule line beneath (two lines)', () => {
   const out = renderMarkdown('# Title');
@@ -10,14 +11,14 @@ test('heading h1: bold + indigo + a rule line beneath (two lines)', () => {
   assert.ok(out.includes('─'), 'h1 should have a rule line beneath');
 });
 
-test('link: emitted as OSC 8 (clickable) with blue color', () => {
+test('link: emitted as OSC 8 (clickable), same color as text', () => {
   const out = renderMarkdown('[ex](https://example.com)');
   assert.ok(
     out.includes('\x1b]8;;https://example.com\x1b\\'),
     'link must use OSC 8 so it is clickable in xterm',
   );
   assert.ok(out.includes('ex'));
-  assert.ok(out.includes('\x1b[38;5;33m'), 'link should be blue');
+  assert.ok(!out.includes('\x1b[38;5;33m'), 'link should not be colored (same as text');
 });
 
 test('list: bullet points', () => {
@@ -58,4 +59,21 @@ test('email is not parsed as a link', () => {
   const out = renderMarkdown('contact jyy@nju.edu.cn');
   assert.ok(!out.includes('\x1b]8;;'), 'bare email must not become a link');
   assert.ok(out.includes('jyy@nju.edu.cn'));
+});
+
+test('paragraph soft break: one newline maps to one line, no stray splits', () => {
+  // Two consecutive source lines form one paragraph with a soft break. The break
+  // must be exactly one line boundary (not a width-1 char wedged into a word,
+  // which miscounts width and strands following words on the wrong line), and
+  // must not insert an extra blank line.
+  const md =
+    '**Associate Professor** · School of Computer Science · Nanjing University\n' +
+    '**Chief Scientist** · [Cosmic Dawn AI](https://cosmicdawn.ai/)';
+  const lines = renderMarkdown(md, 80).split('\n').map(stripAnsi);
+  const i = lines.findIndex((l) => l.includes('Associate'));
+  assert.ok(i >= 0);
+  const next = lines[i + 1];
+  assert.ok(next.includes('Chief Scientist'), '"Chief Scientist" must stay on one line');
+  assert.ok(next.includes('Cosmic Dawn AI'));
+  assert.ok(!next.includes('Associate'), 'the two source lines must not bleed together');
 });

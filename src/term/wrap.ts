@@ -107,8 +107,28 @@ export function wrapLine(line: string, cols: number): string[] {
  * so styling and OSC 8 links survive the wrap. A single word wider than `width`
  * is hard-broken at the cell boundary (grapheme-aware, so CJK / emoji aren't
  * split mid-cluster).
+ *
+ * Embedded newlines (markdown soft/hard breaks, `<br>`) are treated as hard line
+ * boundaries: each `\n`-delimited segment is wrapped on its own. Otherwise the
+ * newline would be folded into a word as a width-1 character, miscounting the
+ * line width and stranding following words on the wrong line.
  */
 export function wrapWords(line: string, width: number): string[] {
+  if (width < 1) width = 1;
+  const out: string[] = [];
+  for (const seg of line.split('\n')) {
+    // One source newline = one line break: each segment's wrapped lines follow
+    // the previous on consecutive lines (no blank line between). An empty
+    // segment (from `\n\n`) is the one case that yields a blank line.
+    const wrapped = wrapSegment(seg, width);
+    if (wrapped.length) out.push(...wrapped);
+    else out.push('');
+  }
+  return out;
+}
+
+/** Wrap a single newline-free segment. */
+function wrapSegment(line: string, width: number): string[] {
   if (width < 1) width = 1;
   const toks = tokenize(line);
 
