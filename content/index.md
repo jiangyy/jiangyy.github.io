@@ -11,7 +11,7 @@
 **Associate Professor** · School of Computer Science · Nanjing University
 
 > 👤 [Bio](#bio) · 📚 [Papers](#papers) · 👥 [Team](#team)
-> 🧭 [Wiki](https://jyywiki.cn/) · ✍️  [Zhihu](https://www.zhihu.com/people/jiang-yan-yan-75) · 📕 [Rednote](https://www.xiaohongshu.com/user/profile/5c24f0850000000005012295)
+> 🧭 [Wiki](https://jyywiki.cn/) · 📰 [Zhihu](https://www.zhihu.com/people/jiang-yan-yan-75) · 📕 [Rednote](https://www.xiaohongshu.com/user/profile/5c24f0850000000005012295)
 >
 > Room 0b1111111111, CST Building
 > Nanjing University Xianlin Campus

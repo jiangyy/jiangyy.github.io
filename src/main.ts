@@ -37,7 +37,27 @@ window.addEventListener('popstate', (e) => {
 // Clear the hash on load so a plain refresh returns to home (index).
 history.replaceState({ cmd: initial }, '', location.pathname + location.search);
 
-term.focus();
 void shell.start();
 
-if (document.fonts) document.fonts.ready.then(() => term.fit());
+// Reveal the terminal only once it has been fit at final (post-font-load)
+// metrics. The host starts at opacity:0 (index.html) so neither the pre-JS
+// full-width frame nor the web-font swap reflow is visible; we fade it in
+// after the fit settles. The 1.5s timeout is a safety net in case font
+// loading stalls, so the screen never stays blank.
+let revealed = false;
+const reveal = () => {
+  if (revealed) return;
+  revealed = true;
+  // Fit while still invisible so the font-swap reflow isn't seen, but always
+  // reveal — even if fit somehow throws — so the screen never stays blank.
+  try {
+    term.fit();
+  } finally {
+    termHost.classList.add('ready');
+    term.focus();
+  }
+};
+const fontReady = document.fonts?.ready ?? null;
+if (fontReady) fontReady.then(reveal);
+else reveal();
+setTimeout(reveal, 1500);

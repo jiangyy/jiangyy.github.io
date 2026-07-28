@@ -30,7 +30,7 @@ export const manifest: Manifest = {
     {
       "slug": "index",
       "title": "蒋炎岩 jyy@nju.edu.cn",
-      "body": "# 蒋炎岩 jyy@nju.edu.cn\n\n```plain\n▌ ▌                ▜▘▗\n▝▞▝▀▖▛▀▖▌ ▌▝▀▖▛▀▖  ▐ ▄ ▝▀▖▛▀▖▞▀▌\n ▌▞▀▌▌ ▌▚▄▌▞▀▌▌ ▌ ▌▐ ▐ ▞▀▌▌ ▌▚▄▌\n ▘▝▀▘▘ ▘▗▄▘▝▀▘▘ ▘ ▝▘ ▀▘▝▀▘▘ ▘▗▄▘\n```\n\n\n**Associate Professor** · School of Computer Science · Nanjing University\n\n> 👤 [Bio](#bio) · 📚 [Papers](#papers) · 👥 [Team](#team)\n> 🧭 [Wiki](https://jyywiki.cn/) · ✍️  [Zhihu](https://www.zhihu.com/people/jiang-yan-yan-75) · 📕 [Rednote](https://www.xiaohongshu.com/user/profile/5c24f0850000000005012295)\n>\n> Room 0b1111111111, CST Building\n> Nanjing University Xianlin Campus\n\n*I build agentic AI systems that power test-time scaling toward the broader horizon of general intelligence.*\n\n(This page doubles as a shell: try `cat papers | less`)",
+      "body": "# 蒋炎岩 jyy@nju.edu.cn\n\n```plain\n▌ ▌                ▜▘▗\n▝▞▝▀▖▛▀▖▌ ▌▝▀▖▛▀▖  ▐ ▄ ▝▀▖▛▀▖▞▀▌\n ▌▞▀▌▌ ▌▚▄▌▞▀▌▌ ▌ ▌▐ ▐ ▞▀▌▌ ▌▚▄▌\n ▘▝▀▘▘ ▘▗▄▘▝▀▘▘ ▘ ▝▘ ▀▘▝▀▘▘ ▘▗▄▘\n```\n\n\n**Associate Professor** · School of Computer Science · Nanjing University\n\n> 👤 [Bio](#bio) · 📚 [Papers](#papers) · 👥 [Team](#team)\n> 🧭 [Wiki](https://jyywiki.cn/) · 📰 [Zhihu](https://www.zhihu.com/people/jiang-yan-yan-75) · 📕 [Rednote](https://www.xiaohongshu.com/user/profile/5c24f0850000000005012295)\n>\n> Room 0b1111111111, CST Building\n> Nanjing University Xianlin Campus\n\n*I build agentic AI systems that power test-time scaling toward the broader horizon of general intelligence.*\n\n(This page doubles as a shell: try `cat papers | less`)",
       "path": "index.md",
       "kind": "page",
       "apps": []

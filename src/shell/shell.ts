@@ -162,7 +162,7 @@ export class Shell {
         this.registry.get(p) ??
         (p.startsWith('bin/') ? this.registry.get(p.slice(4)) : undefined);
       if (!cmd) {
-        this.term.print(`command not found: ${name} — try \`help\``);
+        this.term.print(`command not found: ${name} — try help`);
         return;
       }
 

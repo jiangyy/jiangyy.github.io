@@ -3,11 +3,11 @@
 //   - shell mode: raw input via onShellData (the shell implements line editing)
 //   - tui mode:   takeOver() hands an app exclusive key + draw control
 //
-// Uses xterm's default DOM renderer — it supports clickable OSC 8 hyperlinks,
-// which the canvas/webgl renderers don't.
+// Uses xterm's default DOM renderer (no canvas/webgl addon): on resize it updates
+// the DOM row-by-row instead of clearing a whole canvas, so window-dragging
+// doesn't flicker. OSC 8 hyperlinks still work.
 import { Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
-import { CanvasAddon } from '@xterm/addon-canvas';
 import { Unicode11Addon } from '@xterm/addon-unicode11';
 import '@xterm/xterm/css/xterm.css';
 
@@ -47,8 +47,6 @@ function internalPage(target: string): string | null {
 }
 
 export class Term {
-  /** Maximum terminal width, in columns. The host is capped and centered at this. */
-  private static readonly MAX_COLS = 80;
   readonly xterm: Terminal;
   private fitAddon = new FitAddon();
   private mode: 'shell' | 'tui' = 'shell';
@@ -56,11 +54,9 @@ export class Term {
   private tuiKeyCb?: (e: KeyEvent) => void;
   private tuiResizeCb?: (size: TermSize) => void;
   private cleanups: Array<() => void> = [];
-  private readonly host: HTMLElement;
   private readonly onNavigate?: (cmd: string) => void;
 
   constructor(host: HTMLElement, onNavigate?: (cmd: string) => void) {
-    this.host = host;
     this.onNavigate = onNavigate;
     this.xterm = new Terminal({
       fontFamily:
@@ -96,12 +92,6 @@ export class Term {
     this.xterm.loadAddon(this.fitAddon);
     this.xterm.open(host);
 
-    // Canvas renderer — crisper than the DOM renderer; OSC 8 links still work.
-    try {
-      this.xterm.loadAddon(new CanvasAddon());
-    } catch (e) {
-      console.warn('canvas renderer unavailable', e);
-    }
     try {
       // Wide-character (CJK / emoji) width handling.
       this.xterm.loadAddon(new Unicode11Addon());
@@ -148,28 +138,9 @@ export class Term {
     this.xterm.clear();
   }
   fit() {
+    // Fit xterm to its host; the host's column count is capped in CSS
+    // (max-width: calc(80ch + ...) in index.html), so this is all that's needed.
     this.fitAddon.fit();
-    this.applyMaxWidth();
-  }
-
-  /** Cap the host at MAX_COLS columns; CSS (justify-content: center) centers it.
-   *  Self-consistent: cell width is derived from the current fit, so the cap reproduces
-   *  MAX_COLS exactly. Setting (not clearing) the value every time avoids oscillation. */
-  private applyMaxWidth() {
-    const host = this.host;
-    const cols = this.xterm.cols;
-    if (cols <= 0) return;
-    const cs = getComputedStyle(host);
-    const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
-    const borderX = parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
-    const contentW = host.clientWidth - padX; // clientWidth includes padding, excludes border
-    if (contentW <= 0) return;
-    const cellW = contentW / cols;
-    const value = Math.ceil(Term.MAX_COLS * cellW + padX + borderX) + 'px';
-    if (host.style.maxWidth !== value) {
-      host.style.maxWidth = value;
-      this.fitAddon.fit(); // refit within the capped width → MAX_COLS
-    }
   }
   focus() {
     this.xterm.focus();
