@@ -9,14 +9,15 @@ import { docCommand } from './content/commands';
 import { builtinApps } from './apps';
 
 const termHost = document.getElementById('term-host');
-if (!termHost) throw new Error('missing #term-host');
+const termScreen = document.getElementById('term-screen');
+if (!termHost || !termScreen) throw new Error('missing #term-host/#term-screen');
 
 const commandFromHash = () => location.hash.replace(/^#/, '').trim();
 const initial = commandFromHash() || 'index';
 
 let shell: Shell;
 // Internal links push a history entry (so Back works) and run the command.
-const term = new Term(termHost, (cmd) => {
+const term = new Term(termScreen, (cmd) => {
   history.pushState({ cmd }, '', '#' + cmd);
   shell.inject(cmd);
 });
