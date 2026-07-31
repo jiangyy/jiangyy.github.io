@@ -20,6 +20,6 @@
 *I build agentic AI systems that power test-time scaling toward the broader horizon of general intelligence.*
 
 - This page doubles as a shell.
-- Try: `bio`, `help`, `tree bin/ | less`, `cat team | grep 2026`.
+  Try: `bio`, `help`, `tree bin/ | less`.
 
 Last update: {{ displayDate(2026, 7, 31) }}
