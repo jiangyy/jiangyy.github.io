@@ -19,6 +19,7 @@
 
 *I build agentic AI systems that power test-time scaling toward the broader horizon of general intelligence.*
 
-- This page doubles as a shell: try `cat papers | less`
+- This page doubles as a shell.
+- Try: `bio`, `help`, `tree bin/ | less`, `cat team | grep 2026`.
 
-Last update: Tue Jul 31 2026
+Last update: {{ displayDate(2026, 7, 31) }}

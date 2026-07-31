@@ -12,6 +12,7 @@ import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
 import { join, basename, relative, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { AppDecl, Document, Manifest } from '../src/content/types';
+import { expandMacros } from './macros';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -43,7 +44,7 @@ function analyze(_body: string): { kind: string; apps: AppDecl[] } {
 }
 
 function buildDoc(file: string): Document {
-  const body = readFileSync(file, 'utf8').trim();
+  const body = expandMacros(readFileSync(file, 'utf8').trim());
   const path = relative(CONTENT_DIR, file).replace(/\\/g, '/');
   const slug = path.replace(/\.md$/, '');
   const { kind, apps } = analyze(body);
