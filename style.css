@@ -132,3 +132,15 @@ html, body {
   border-radius: 5px;
 }
 .xterm-viewport::-webkit-scrollbar-thumb:hover { background: #a8afb7; }
+
+/* Phones: the home ASCII banner needs ~35 cols. The default frame paddings eat
+   too much horizontal space on a narrow screen and force the banner to wrap,
+   so tighten the outer margins and the terminal's own padding here. Desktop
+   keeps the comfortable spacing above. */
+@media (max-width: 640px) {
+  #app { padding: 4px; }
+  #term-host {
+    padding: 12px 8px 22px 8px;
+    border-radius: 6px;
+  }
+}
